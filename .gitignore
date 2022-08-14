@@ -1,0 +1,14 @@
+randombench
+synbench
+dotprod
+*.o
+*.txt
+lib/*.a
+*.weights
+*.a
+*.so
+darknet
+html
+latex
+heat-tao
+heat-tbb

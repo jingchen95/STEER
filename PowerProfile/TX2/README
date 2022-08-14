@@ -1,0 +1,4 @@
+The folder is for power profiles grouped by memory-boundness levels. 
+The name of files are defined as: TX2_$(Thresold_START)_$(Thresold_END).
+The thresholds are [0,1), [1,2), ..., [9,10).
+Format: frequency_index   width   Denver  A57
