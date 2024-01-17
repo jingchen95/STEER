@@ -804,6 +804,9 @@ int PolyTask::find_best_config(int nthread, PolyTask * it){ /* The kernel task h
       //   it->granularity_fine = true;
       // }
     }else{ /* Coarse-grained tasks --- Find out best frequency, core type, number of cores */
+#ifdef QoS 
+      float time_ref = it->get_timetable(0, 0, 0); // Time reference is Denver_1
+#endif
       for(int freq_indx = 0; freq_indx < NUM_AVAIL_FREQ; freq_indx++){
         for(int clus_id = 0; clus_id < NUMSOCKETS; clus_id++){
           if(sum_cluster_active[1-clus_id] == 0){ /* the number of active cores is zero in another cluster */
@@ -826,6 +829,11 @@ int PolyTask::find_best_config(int nthread, PolyTask * it){ /* The kernel task h
             float idleP = idleP_cluster * wid / sum_cluster_active[clus_id];
             float runtimeP = it->get_powertable(freq_indx, clus_id, wid-1);
             float timeP = it->get_timetable(freq_indx, clus_id, wid-1);
+#ifdef QoS 
+            if(timeP > time_ref * 1.2){ // Performance penalty is 20% of D_1, if exceed, then do not consider the config
+              continue;
+            }else{    
+#endif            
 #ifdef EDP_TEST_
             energy_pred = timeP * timeP * (runtimeP + idleP);
 #else
@@ -843,6 +851,9 @@ int PolyTask::find_best_config(int nthread, PolyTask * it){ /* The kernel task h
               it->set_best_cluster(clus_id);
               it->set_best_numcores(wid);
             }
+#ifdef QoS 
+            }
+#endif
           }
         }
       }
@@ -2489,7 +2500,6 @@ PolyTask * PolyTask::commit_and_wakeup(int _nthread){
           LOCK_ACQUIRE(worker_lock[(*it)->leader]);
           worker_ready_q[(*it)->leader].push_back(*it);
           LOCK_RELEASE(worker_lock[(*it)->leader]);
-
 #endif
 
 #ifdef ERASE_target_perf

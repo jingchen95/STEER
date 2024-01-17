@@ -41,8 +41,8 @@ all: lib
 	#cd $(EXAMPLES)/randomDAGs && $(MAKE) clean && $(MAKE)
 	cd $(EXAMPLES)/syntheticDAGs && $(MAKE) clean && $(MAKE) 
 	#cd $(EXAMPLES)/kmeans && $(MAKE) clean && $(MAKE)
-	cd $(EXAMPLES)/heat && $(MAKE) clean && $(MAKE) 
-	cd $(EXAMPLES)/sparselu && $(MAKE) clean && $(MAKE) 
+	#cd $(EXAMPLES)/heat && $(MAKE) clean && $(MAKE) 
+	#cd $(EXAMPLES)/sparselu && $(MAKE) clean && $(MAKE) 
 	#cd $(EXAMPLES)/alya-xitao && $(MAKE) clean && $(MAKE)
 
 %.o : %.cxx

@@ -1,6 +1,0 @@
-FILE=./data/bfs/inputGen/graph16M.txt
-echo "RUNNING OMP"
-./bfs 4 $FILE 
-
-echo "RUNNING XITAO"
-./bfs_xitao 4 $FILE

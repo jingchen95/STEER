@@ -195,7 +195,7 @@ int gotao_init_hw( int nthr, int thrb, int nhwc)
   
   /* 2021 Oct 02: Read Power Profile File, including idle and dynamic power */
   std::ifstream infile, infile1;
-  infile1.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2/TX2_idle.txt"); /* Step 1: Read idle power */
+  infile1.open("./PowerProfile/TX2/TX2_idle.txt"); /* Step 1: Read idle power */
   if(infile1.fail()){
     std::cout << "Failed to open power profile file!" << std::endl;
     std::cin.get();
@@ -221,7 +221,7 @@ int gotao_init_hw( int nthr, int thrb, int nhwc)
 
   for(int mb_bound = 0; mb_bound < 10; mb_bound++){ /* Step 2: Read runtime power */
     char address[100] = {'\0'};
-    sprintf(address, "/home/nvidia/Work_1/EAS/PowerProfile/TX2/TX2_%d_%d.txt", mb_bound, mb_bound+1);
+    sprintf(address, "./PowerProfile/TX2/TX2_%d_%d.txt", mb_bound, mb_bound+1);
     // std::cout << "Trying to open file " << address << "...\n";
     // FILE * files = fopen(address, "r");
     // if (files == NULL) {
@@ -300,7 +300,7 @@ int gotao_init_hw( int nthr, int thrb, int nhwc)
 
 #if (defined DVFS) && (defined TX2)
 // Needs to find out the task type ??????
-  infile.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_DVFS_MM");
+  infile.open("./PowerProfile/TX2_DVFS_MM");
   if(infile.fail()){
     std::cout << "Failed to open power profile file!" << std::endl;
     std::cin.get();
@@ -343,7 +343,7 @@ int gotao_init_hw( int nthr, int thrb, int nhwc)
   //   }
   // }
 
-  infile1.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_DVFS_CP");
+  infile1.open("./PowerProfile/TX2_DVFS_CP");
   if(infile1.fail()){
     std::cout << "Failed to open power profile file!" << std::endl;
     std::cin.get();
@@ -388,7 +388,7 @@ int gotao_init_hw( int nthr, int thrb, int nhwc)
 
 #elif (defined CATA)
   // Denver Frequency: 2035200, A57 Frequency: 1113600
-  infile.open("/home/nvidia/Work_1/EAS/PowerProfile/COMP_CATA.txt");
+  infile.open("./PowerProfile/COMP_CATA.txt");
   std::string token;
   while(std::getline(infile, token)) {
     std::istringstream line(token);
@@ -416,7 +416,7 @@ int gotao_init_hw( int nthr, int thrb, int nhwc)
 #if (defined DynaDVFS)
   std::string token;
   // Compute-bound Power Models
-  infile.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MAXMAX_MatMul.txt");
+  infile.open("./PowerProfile/TX2_MAXMAX_MatMul.txt");
   while(std::getline(infile, token)) {
     std::istringstream line(token);
     int ii = 0;
@@ -432,7 +432,7 @@ int gotao_init_hw( int nthr, int thrb, int nhwc)
       ii++;
     }
   }
-  infile1.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MINMIN_MatMul.txt");
+  infile1.open("./PowerProfile/TX2_MINMIN_MatMul.txt");
   while(std::getline(infile1, token)) {
     std::istringstream line(token);
     int ii = 0;
@@ -461,7 +461,7 @@ int gotao_init_hw( int nthr, int thrb, int nhwc)
     }
   }
   // Memory-bound Power Models
-  infile.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MAXMAX_Copy.txt");
+  infile.open("./PowerProfile/TX2_MAXMAX_Copy.txt");
   while(std::getline(infile, token)) {
     std::istringstream line(token);
     int ii = 0;
@@ -477,7 +477,7 @@ int gotao_init_hw( int nthr, int thrb, int nhwc)
       ii++;
     }
   }
-  infile1.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MINMIN_Copy.txt");
+  infile1.open("./PowerProfile/TX2_MINMIN_Copy.txt");
   while(std::getline(infile1, token)) {
     std::istringstream line(token);
     int ii = 0;
@@ -506,7 +506,7 @@ int gotao_init_hw( int nthr, int thrb, int nhwc)
     }
   }
   // Cache-intensive Power Models
-  infile.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MAXMAX_Stencil.txt");
+  infile.open("./PowerProfile/TX2_MAXMAX_Stencil.txt");
   while(std::getline(infile, token)) {
     std::istringstream line(token);
     int ii = 0;
@@ -522,7 +522,7 @@ int gotao_init_hw( int nthr, int thrb, int nhwc)
       ii++;
     }
   }
-  infile1.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MINMIN_Stencil.txt");
+  infile1.open("./PowerProfile/TX2_MINMIN_Stencil.txt");
   while(std::getline(infile1, token)) {
     std::istringstream line(token);
     int ii = 0;
@@ -552,24 +552,24 @@ int gotao_init_hw( int nthr, int thrb, int nhwc)
   }
 #else
   if(denver_freq == 0 && a57_freq == 0){
-    infile.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MAXMAX_MatMul.txt");
-    infile1.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MAXMAX_Copy.txt");
-    infile2.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MAXMAX_Stencil.txt");
+    infile.open("./PowerProfile/TX2_MAXMAX_MatMul.txt");
+    infile1.open("./PowerProfile/TX2_MAXMAX_Copy.txt");
+    infile2.open("./PowerProfile/TX2_MAXMAX_Stencil.txt");
   }
   if(denver_freq == 1 && a57_freq == 0){
-    infile.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MINMAX_MatMul.txt");
-    infile1.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MINMAX_Copy.txt");
-    infile2.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MINMAX_Stencil.txt");
+    infile.open("./PowerProfile/TX2_MINMAX_MatMul.txt");
+    infile1.open("./PowerProfile/TX2_MINMAX_Copy.txt");
+    infile2.open("./PowerProfile/TX2_MINMAX_Stencil.txt");
   }
   if(denver_freq == 0 && a57_freq == 1){
-    infile.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MAXMIN_MatMul.txt");
-    infile1.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MAXMIN_Copy.txt");
-    infile2.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MAXMIN_Stencil.txt");
+    infile.open("./PowerProfile/TX2_MAXMIN_MatMul.txt");
+    infile1.open("./PowerProfile/TX2_MAXMIN_Copy.txt");
+    infile2.open("./PowerProfile/TX2_MAXMIN_Stencil.txt");
   }
   if(denver_freq == 1 && a57_freq == 1){
-    infile.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MINMIN_MatMul.txt");
-    infile1.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MINMIN_Copy.txt");
-    infile2.open("/home/nvidia/Work_1/EAS/PowerProfile/TX2_MINMIN_Stencil.txt");
+    infile.open("./PowerProfile/TX2_MINMIN_MatMul.txt");
+    infile1.open("./PowerProfile/TX2_MINMIN_Copy.txt");
+    infile2.open("./PowerProfile/TX2_MINMIN_Stencil.txt");
   }
   if(infile.fail() || infile1.fail() || infile2.fail()){
     std::cout << "Failed to open power profile file!" << std::endl;
@@ -1344,8 +1344,10 @@ int worker_loop(int nthread){
         }
 
         for(int i = assembly->leader; i < assembly->leader + assembly->width; i++){
+          // std::cout << "step 1\n";
           LOCK_ACQUIRE(worker_assembly_lock[i]);
           worker_assembly_q[i].push_back(st);
+          // std::cout << "step 2\n";
 #ifdef NUMTASKS_MIX
 #ifdef ONLYCRITICAL
           int pr = assembly->if_prio(nthread, assembly);
@@ -1465,10 +1467,21 @@ int worker_loop(int nthread){
                 if(oldticks == 0.0f || newticks < oldticks){   /*Only update the PTT tables when (1) the entry hasn't been trained; (2) when new execution time is smaller*/
                   assembly->set_timetable(0, 0, newticks, width_index);
                 }
+                // if(oldticks == 0.0f){   /*Only update the PTT tables when (1) the entry hasn't been trained; (2) when new execution time is smaller*/
+                //   assembly->set_timetable(0, 0, newticks, width_index);
+                // }else{
+                //   assembly->set_timetable(0, 0, (oldticks + newticks)/2, width_index);
+                // }
               }else{
                 if(oldticks == 0.0f || ticks < oldticks){   /*Only update the PTT tables when (1) the entry hasn't been trained; (2) when new execution time is smaller*/
                   assembly->set_timetable(0, 0, ticks, width_index);
                 }
+                // if(oldticks == 0.0){
+                //   assembly->set_timetable(0, 0, ticks,width_index);  
+                // }
+                // else{
+                //   assembly->set_timetable(0, 0, ((oldticks + ticks)/2), width_index);
+                // }
               }
               assembly->increment_PTT_UpdateFinish(0, 0, width_index);
 #ifdef DEBUG
@@ -1508,10 +1521,21 @@ int worker_loop(int nthread){
                 if(oldticks == 0.0f || newticks < oldticks){   /*Only update the PTT tables when (1) the entry hasn't been trained; (2) when new execution time is smaller*/
                   assembly->set_timetable(NUM_AVAIL_FREQ/2, 0, newticks, width_index);
                 }
+                // if(oldticks == 0.0f){   /*Only update the PTT tables when (1) the entry hasn't been trained; (2) when new execution time is smaller*/
+                //   assembly->set_timetable(NUM_AVAIL_FREQ/2, 0, newticks, width_index);
+                // }else{
+                //   assembly->set_timetable(NUM_AVAIL_FREQ/2, 0, (oldticks + newticks)/2, width_index);
+                // }
               }else{
                 if(oldticks == 0.0f || ticks < oldticks){   /*Only update the PTT tables when (1) the entry hasn't been trained; (2) when new execution time is smaller*/
                   assembly->set_timetable(NUM_AVAIL_FREQ/2, 0, ticks, width_index);
                 }
+                // if(oldticks == 0.0){
+                //   assembly->set_timetable(NUM_AVAIL_FREQ/2, 0, ticks,width_index);  
+                // }
+                // else{
+                //   assembly->set_timetable(NUM_AVAIL_FREQ/2, 0, ((oldticks + ticks)/2), width_index);
+                // }
               }
               assembly->increment_PTT_UpdateFinish(1, 0, width_index);
 #ifdef DEBUG
@@ -1739,10 +1763,21 @@ int worker_loop(int nthread){
                 if(oldticks == 0.0f || newticks < oldticks){   /*Only update the PTT tables when (1) the entry hasn't been trained; (2) when new execution time is smaller*/
                   assembly->set_timetable(0, 1, newticks, width_index);
                 }
+                // if(oldticks == 0.0f){   /*Only update the PTT tables when (1) the entry hasn't been trained; (2) when new execution time is smaller*/
+                //   assembly->set_timetable(0, 1, newticks, width_index);
+                // }else{
+                //   assembly->set_timetable(0, 1, (oldticks + newticks)/2, width_index);
+                // }
               }else{
                 if(oldticks == 0.0f || ticks < oldticks){   /*Only update the PTT tables when (1) the entry hasn't been trained; (2) when new execution time is smaller*/
                   assembly->set_timetable(0, 1, ticks, width_index);
                 }
+                // if(oldticks == 0.0){
+                //   assembly->set_timetable(0, 1, ticks,width_index);  
+                // }
+                // else{
+                //   assembly->set_timetable(0, 1, ((oldticks + ticks)/2), width_index);
+                // }
               }
               assembly->increment_PTT_UpdateFinish(0, 1, width_index);
 #ifdef DEBUG
@@ -1778,10 +1813,21 @@ int worker_loop(int nthread){
                 if(oldticks == 0.0f || newticks < oldticks){   /*Only update the PTT tables when (1) the entry hasn't been trained; (2) when new execution time is smaller*/
                   assembly->set_timetable(NUM_AVAIL_FREQ/2, 1, newticks, width_index);
                 }
+                // if(oldticks == 0.0f){   /*Only update the PTT tables when (1) the entry hasn't been trained; (2) when new execution time is smaller*/
+                //   assembly->set_timetable(NUM_AVAIL_FREQ/2, 1, newticks, width_index);
+                // }else{
+                //   assembly->set_timetable(NUM_AVAIL_FREQ/2, 1, (oldticks + newticks)/2, width_index);
+                // }
               }else{
                 if(oldticks == 0.0f || ticks < oldticks){   /*Only update the PTT tables when (1) the entry hasn't been trained; (2) when new execution time is smaller*/
                   assembly->set_timetable(NUM_AVAIL_FREQ/2, 1, ticks, width_index);
                 }
+                // if(oldticks == 0.0){
+                //   assembly->set_timetable(NUM_AVAIL_FREQ/2, 1, ticks,width_index);  
+                // }
+                // else{
+                //   assembly->set_timetable(NUM_AVAIL_FREQ/2, 1, ((oldticks + ticks)/2), width_index);
+                // }
               }
               assembly->increment_PTT_UpdateFinish(1, 1, width_index);
 #ifdef DEBUG
@@ -2290,10 +2336,9 @@ int worker_loop(int nthread){
       }
       
 #ifdef OVERHEAD_PTT
-      //st = assembly->commit_and_wakeup(nthread, elapsed_ptt);
-      assembly->commit_and_wakeup(nthread, elapsed_ptt);
+      st = assembly->commit_and_wakeup(nthread, elapsed_ptt);
 #else
-      //st = assembly->commit_and_wakeup(nthread);
+      // st = 
       assembly->commit_and_wakeup(nthread);
 #endif
       assembly->cleanup();
@@ -2372,7 +2417,6 @@ int worker_loop(int nthread){
         }
         //EAS
         if(Sched == 1){
-#if defined(TX2)
 // #ifndef MultipleKernels
 //         	if(!ptt_full){
           	// do{
@@ -2400,23 +2444,23 @@ int worker_loop(int nthread){
 // #endif
           // { 
           	/* [EAS] Only steal tasks from same cluster */
-// #ifdef EDP_TEST_
-//             if(global_training == true){
-//               do{
-//                 random_core = (rand_r(&seed) % gotao_nthreads);
-//               } while(random_core == nthread);
-//             }else{
-//               if(nthread < 2){
-//                 do{
-//                   random_core = (rand_r(&seed) % (START_A - START_D));
-//                 } while(random_core == nthread);
-//               }else{
-//                 do{
-//                   random_core = START_A + (rand_r(&seed) % (gotao_nthreads - START_A));
-//                 }while(random_core == nthread); 
-//               }
-//             }          
-// #else
+#if (defined EDP_TEST_) || (defined STEER_WSAC) // STEER_WSAC: STEER with work stealing across clusters
+            if(global_training == true){
+              do{
+                random_core = (rand_r(&seed) % gotao_nthreads);
+              } while(random_core == nthread);
+            }else{
+              if(nthread < 2){
+                do{
+                  random_core = (rand_r(&seed) % (START_A - START_D));
+                } while(random_core == nthread);
+              }else{
+                do{
+                  random_core = START_A + (rand_r(&seed) % (gotao_nthreads - START_A));
+                }while(random_core == nthread); 
+              }
+            }          
+#else
             if(nthread < 2){
             	do{
               	random_core = (rand_r(&seed) % (START_A - START_D));
@@ -2544,11 +2588,11 @@ int worker_loop(int nthread){
               if(st->width <= 2){
                 st->leader = nthread /st->width * st->width;
               }
-           
-              // if(st->get_bestconfig_state() == true && nthread >= 2){ //Test Code: Allow work stealing across clusters
-              //   st->width = 4;
-              //   st->leader = 2;
-              // }
+              // If Denver steal A57 (width = 4)
+              if(st->get_bestconfig_state() == true && nthread < 2 && st->width == 4){ //Test Code: Allow work stealing across clusters
+                st->width = 2;
+                st->leader = 0;
+              }
               tao_total_steals++;  
             }
 // #ifdef Energyaccuracy

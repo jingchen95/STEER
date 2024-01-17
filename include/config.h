@@ -13,8 +13,8 @@
 #define TRAIN_METHOD_1
 #define Performance_Model_Time    // Only use time to calculate memory-boundness
 //#define Performance_Model_Cycle // Use Cycles to calculate memory-boundness
-#define FINE_GRAIN_THRESHOLD 0.001
-#define NUM_TRAIN_TASKS 3
+#define FINE_GRAIN_THRESHOLD 0.0005
+#define NUM_TRAIN_TASKS 6
 #define START_D 0
 #define START_A 2
 #define NUM_AVAIL_FREQ 12
